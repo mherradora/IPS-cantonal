@@ -1,0 +1,53 @@
+---
+title: "Costa Rica: IPS Cantonal"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+require(tidyr)
+require(dplyr)
+require(ggplot2)
+require(plotly)
+
+ips <- read.csv("./inputs/cr-IPS-cantonal.csv", stringsAsFactors=FALSE)
+indices <- names(ips)[4:dim(ips)[2]]
+indices <- gsub("\\."," ",indices)
+```
+
+Indices - Box Plots
+=======================================================================
+
+Inputs {.sidebar}
+-----------------------------------------------------------------------
+
+```{r}
+selectInput("indice", label = h3("Indice"),
+    choices = indices,
+    selected = 1)
+```
+
+Se observa el comportamiento de cada indicador por provincia.
+
+Row
+-----------------------------------------------------------------------
+
+### Box Plot Ventas
+
+```{r}
+indi <- reactive({gsub(" ","\\.",input$indice)})
+
+tmp <- reactive({
+  tmp0 <- ips[,c(indi(),"Provincia","Cantón")]
+  names(tmp0)[1] <- "Indice"
+  tmp0
+  })
+
+renderPlotly({
+  plot_ly(tmp(), y = Indice, color = as.factor(Provincia), type = "box")
+})
+```
