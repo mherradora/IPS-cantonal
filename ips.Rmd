@@ -52,28 +52,6 @@ renderPlotly({
 })
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Indices - Scatter Plots
 =======================================================================
 
@@ -100,15 +78,13 @@ Row
 ```{r}
 enX_call <- reactive(gsub(" ","\\.",input$enX))
 enY_call <- reactive(gsub(" ","\\.",input$enY))
-# tmp <- reactive({ts(clicksMovil[,produ()],frequency = 28) %>% decompose()})
-# renderPlotly({plot_ly(x = clicksMovil$Day.of.Month, y = tmp()$x, name="Observado") %>%
-#     layout(title = paste("Eventos de",input$producto),
-#            xaxis = list(title="Fecha"), yaxis = list(title="Eventos"))})
 
 renderPlotly({
-  # plot1 <- ggplot(data = ips, aes(x = as.call(enX_call()), y = as.call(enY_call()))) +
   plot1 <- ggplot(data = ips, aes(x = ips[,enX_call()], y = ips[,enY_call()])) +
-    geom_point(aes(colour=Provincia))
+    geom_point(aes(colour=Provincia)) +
+    xlab(input$enX) +
+    ylab(input$enY) +
+    ggtitle(paste(input$enX,"vs",input$enY))
   ggplotly(plot1)
   })
 ```
