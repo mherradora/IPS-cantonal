@@ -1,6 +1,9 @@
 # IPS-cantonal
 
-Un pequeño intento de visualizar la información generada dentro del proyecto Costa Rica Propone [link](http://www.costaricapropone.go.cr/) 
+Un pequeño intento de visualizar la información generada dentro del proyecto [Costa Rica Propone](http://www.costaricapropone.go.cr/) 
+
+El proyecto se puede osbservar en su estado actual en:
+[Costa Rica: IPS Cantonal](https://mherradora.shinyapps.io/costarica_ips/)
 
 To do:
 
