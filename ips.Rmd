@@ -36,7 +36,7 @@ Se observa el comportamiento de cada indicador por provincia.
 Row
 -----------------------------------------------------------------------
 
-### Box Plot Ventas
+### Box Plot
 
 ```{r}
 indi <- reactive({gsub(" ","\\.",input$indice)})
@@ -50,4 +50,65 @@ tmp <- reactive({
 renderPlotly({
   plot_ly(tmp(), y = Indice, color = as.factor(Provincia), type = "box")
 })
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Indices - Scatter Plots
+=======================================================================
+
+Inputs {.sidebar}
+-----------------------------------------------------------------------
+
+```{r}
+selectInput("enX", label = h3("Variable en eje x:"),
+    choices = indices,
+    selected = 1)
+
+selectInput("enY", label = h3("Variable en eje y:"),
+    choices = indices,
+    selected = 2)
+```
+
+Se observa el comportamiento de la relación entre dos indicadores.
+
+Row
+-----------------------------------------------------------------------
+
+### Box Plot
+
+```{r}
+enX_call <- reactive(gsub(" ","\\.",input$enX))
+enY_call <- reactive(gsub(" ","\\.",input$enY))
+# tmp <- reactive({ts(clicksMovil[,produ()],frequency = 28) %>% decompose()})
+# renderPlotly({plot_ly(x = clicksMovil$Day.of.Month, y = tmp()$x, name="Observado") %>%
+#     layout(title = paste("Eventos de",input$producto),
+#            xaxis = list(title="Fecha"), yaxis = list(title="Eventos"))})
+
+renderPlotly({
+  # plot1 <- ggplot(data = ips, aes(x = as.call(enX_call()), y = as.call(enY_call()))) +
+  plot1 <- ggplot(data = ips, aes(x = ips[,enX_call()], y = ips[,enY_call()])) +
+    geom_point(aes(colour=Provincia))
+  ggplotly(plot1)
+  })
 ```
