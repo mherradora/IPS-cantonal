@@ -13,6 +13,7 @@ require(tidyr)
 require(dplyr)
 require(ggplot2)
 require(plotly)
+require(DT)
 
 ips <- read.csv("./inputs/cr-IPS-cantonal.csv", stringsAsFactors=FALSE)
 indices <- names(ips)[4:dim(ips)[2]]
@@ -87,4 +88,16 @@ renderPlotly({
     ggtitle(paste(input$enX,"vs",input$enY))
   ggplotly(plot1)
   })
+```
+
+Indices - Datos
+=======================================================================
+
+Inputs
+-----------------------------------------------------------------------
+
+```{r}
+renderDataTable({
+  datatable(ips)
+})
 ```
