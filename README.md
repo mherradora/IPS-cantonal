@@ -2,9 +2,9 @@
 
 Un pequeño intento de visualizar la información generada dentro del proyecto [Costa Rica Propone](http://www.costaricapropone.go.cr/) 
 
-El objetivo de esto es facilitar a diversos grupos un acceso a los datos en el cual se pueda observar no solo los indicadores para un cantón en específicos sino tambien para otros cantones. Lo anterior con el fin de poder explorar la creación de alianzas en la consecusion de mejoras en los indicadores o bien mediante benchmarking.
+El objetivo de esto es facilitar a diversos grupos un acceso a los datos en el cual se pueda observar, no solo los indicadores para un cantón en específico, sino tambien en comparación con otros cantones. Lo anterior facilitaría el poder explorar la creación de alianzas en la consecusion de mejoras en los indicadores o bien la busqueda de ejemplos para mejores prácticas.
 
-El proyecto se puede osbservar en su estado actual en:
+El proyecto se puede observar en su estado actual en:
 [Costa Rica: IPS Cantonal](https://mherradora.shinyapps.io/costarica_ips/)
 
 To do:
