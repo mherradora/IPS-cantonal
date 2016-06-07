@@ -40,7 +40,7 @@ selectInput("enColor", label = h3("Variable del color:"),
 
 Se observa el comportamiento de cada indicador por provincia.
 
-Row
+Row {.tabset}
 -----------------------------------------------------------------------
 
 ### Box Plot
@@ -60,6 +60,17 @@ renderPlotly({
 })
 ```
 
+### Datos
+
+```{r}
+renderDataTable({
+  tmp1 <- tmp()
+  names(tmp1)[1] <- indi()
+  datatable(tmp())
+})
+```
+
+
 Indices - Scatter Plots
 =======================================================================
 
@@ -75,26 +86,26 @@ selectInput("enY", label = h3("Variable en eje y:"),
     choices = indices,
     selected = 2)
 
-selectInput("enColor", label = h3("Variable del color:"),
+selectInput("enColor2", label = h3("Variable del color:"),
     choices = c("Provincia.y","UrbanoRural","AM","GAM"),
     selected = 1)
 ```
 
 Se observa el comportamiento de la relación entre dos indicadores.
 
-Row
+Row {.tabset}
 -----------------------------------------------------------------------
 
-### Box Plot
+### Scatter Plot
 
 ```{r}
 enX_call <- reactive(gsub(" ","\\.",input$enX))
 enY_call <- reactive(gsub(" ","\\.",input$enY))
-enColor <- reactive(input$enColor)
+enColor2 <- reactive(input$enColor2)
 
 renderPlotly({
   plot1 <- ggplot(data = ips, aes(x = ips[,enX_call()], y = ips[,enY_call()])) +
-    geom_point(aes(colour=ips[,enColor()])) +
+    geom_point(aes(colour=ips[,enColor2()])) +
     xlab(input$enX) +
     ylab(input$enY) +
     ggtitle(paste(input$enX,"vs",input$enY))
@@ -102,14 +113,26 @@ renderPlotly({
   })
 ```
 
-Indices - Datos
-=======================================================================
-
-Inputs
------------------------------------------------------------------------
+### Datos
 
 ```{r}
+tmp2 <- reactive({
+  ips[,c(enColor2(),"Cantón",enX_call(),enY_call())]
+  })
+
 renderDataTable({
-  datatable(ips)
+  datatable(tmp2())
 })
 ```
+
+<!-- Indices - Datos -->
+<!-- ======================================================================= -->
+
+<!-- Inputs -->
+<!-- ----------------------------------------------------------------------- -->
+
+<!-- ```{r} -->
+<!-- renderDataTable({ -->
+<!--   datatable(ips) -->
+<!-- }) -->
+<!-- ``` -->
