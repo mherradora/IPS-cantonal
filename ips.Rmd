@@ -15,7 +15,9 @@ require(ggplot2)
 require(plotly)
 require(DT)
 
-ips <- read.csv("./inputs/cr-IPS-cantonal.csv", stringsAsFactors=FALSE)
+# ips <- read.csv("./inputs/cr-IPS-cantonal.csv", stringsAsFactors=FALSE)
+ips <- readRDS("ips_ampliado.Rds")
+
 indices <- names(ips)[4:dim(ips)[2]]
 indices <- gsub("\\."," ",indices)
 ```
@@ -30,6 +32,10 @@ Inputs {.sidebar}
 selectInput("indice", label = h3("Indice"),
     choices = indices,
     selected = 1)
+
+selectInput("enColor", label = h3("Variable del color:"),
+    choices = c("Provincia.y","UrbanoRural","AM","GAM"),
+    selected = 1)
 ```
 
 Se observa el comportamiento de cada indicador por provincia.
@@ -41,15 +47,16 @@ Row
 
 ```{r}
 indi <- reactive({gsub(" ","\\.",input$indice)})
+enColor <- reactive(input$enColor)
 
 tmp <- reactive({
-  tmp0 <- ips[,c(indi(),"Provincia","Cantón")]
+  tmp0 <- ips[,c(indi(),enColor(),"Cantón")]
   names(tmp0)[1] <- "Indice"
   tmp0
   })
 
 renderPlotly({
-  plot_ly(tmp(), y = Indice, color = as.factor(Provincia), type = "box")
+  plot_ly(tmp(), y = Indice, color = as.factor(ips[,enColor()]), type = "box")
 })
 ```
 
@@ -67,6 +74,10 @@ selectInput("enX", label = h3("Variable en eje x:"),
 selectInput("enY", label = h3("Variable en eje y:"),
     choices = indices,
     selected = 2)
+
+selectInput("enColor", label = h3("Variable del color:"),
+    choices = c("Provincia.y","UrbanoRural","AM","GAM"),
+    selected = 1)
 ```
 
 Se observa el comportamiento de la relación entre dos indicadores.
@@ -79,10 +90,11 @@ Row
 ```{r}
 enX_call <- reactive(gsub(" ","\\.",input$enX))
 enY_call <- reactive(gsub(" ","\\.",input$enY))
+enColor <- reactive(input$enColor)
 
 renderPlotly({
   plot1 <- ggplot(data = ips, aes(x = ips[,enX_call()], y = ips[,enY_call()])) +
-    geom_point(aes(colour=Provincia)) +
+    geom_point(aes(colour=ips[,enColor()])) +
     xlab(input$enX) +
     ylab(input$enY) +
     ggtitle(paste(input$enX,"vs",input$enY))
