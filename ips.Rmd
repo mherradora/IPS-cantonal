@@ -34,7 +34,7 @@ selectInput("indice", label = h3("Indice"),
     selected = 1)
 
 selectInput("enColor", label = h3("Variable del color:"),
-    choices = c("Provincia.y","UrbanoRural","AM","GAM"),
+    choices = c("Provincia.y","Urbano Rural","Area Metropolitana","Gran Area Metropolitana"),
     selected = 1)
 ```
 
