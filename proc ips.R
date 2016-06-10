@@ -6,6 +6,9 @@ require(plotly)
 require(readr)
 
 ips <- read.csv("./inputs/cr-IPS-cantonal.csv", stringsAsFactors=FALSE)
+names(ips) <- gsub("\\."," ",names(ips))
+ips <- ips %>%
+  select(-Provincia)
 
 cantones_2011 <- read_csv("./inputs/cantones_censo2011_demograficos.csv")
 
