@@ -1,0 +1,9 @@
+name: costarica_ips
+account: mherradora
+server: shinyapps.io
+appId: 103645
+bundleId: 474050
+url: https://mherradora.shinyapps.io/costarica_ips/
+when: 1465283653.20878
+asMultiple: FALSE
+asStatic: FALSE
